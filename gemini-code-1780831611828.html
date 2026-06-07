@@ -1,59 +1,118 @@
-<index.html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Біблійні Герої: Кейси</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a2e; color: white; text-align: center; padding: 20px; }
-        .stats { background: #16213e; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 20px; }
-        .crystal { color: #00d2d3; font-weight: bold; }
-        .box-container { display: flex; justify-content: center; gap: 20px; }
-        .box { background: #0f3460; padding: 20px; border-radius: 15px; cursor: pointer; border: 3px solid #e94560; transition: transform 0.2s; width: 200px; }
-        .box:hover { transform: scale(1.05); }
-        .box h3 { margin: 0 0 10px 0; }
-        #result-screen { margin-top: 30px; font-size: 24px; font-weight: bold; padding: 20px; border-radius: 10px; display: none; }
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+        body { 
+            font-family: 'Fredoka One', cursive, sans-serif; 
+            background-color: #12122c; 
+            color: white; 
+            text-align: center; 
+            padding: 20px; 
+            margin: 0;
+            overflow-x: hidden;
+        }
+        h1 { color: #f1c40f; font-size: 3rem; text-shadow: 2px 2px 0px #e74c3c; margin-bottom: 10px; }
+        
+        .stats { 
+            background: #1e2749; 
+            padding: 15px 30px; 
+            border-radius: 20px; 
+            display: inline-block;
+            font-size: 28px; 
+            border: 3px solid #3a4b86;
+            margin-bottom: 30px; 
+        }
+        .crystal { color: #00d2d3; font-weight: bold; text-shadow: 0 0 10px #00d2d3; }
+
+        .box-container { 
+            display: flex; 
+            justify-content: center; 
+            gap: 30px; 
+            flex-wrap: wrap;
+        }
+        
+        .box { 
+            background: linear-gradient(135deg, #0f3460, #1a1a2e); 
+            padding: 30px; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            border: 5px solid #e94560; 
+            transition: all 0.2s; 
+            width: 250px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .box:hover { transform: scale(1.05); border-color: #f1c40f; }
+        .box:active { transform: scale(0.95); }
+        .box h3 { margin: 0 0 15px 0; font-size: 28px; color: #fff; }
+        .box p { font-size: 24px; margin: 0; color: #a1b0d1; }
+        .box-icon { font-size: 60px; margin-bottom: 10px; }
+
+        #result-screen { 
+            margin: 40px auto; 
+            font-size: 32px; 
+            padding: 30px; 
+            border-radius: 20px; 
+            display: none; 
+            max-width: 600px;
+            background: #16213e;
+            border: 4px dashed #3a4b86;
+        }
         
         /* Кольори рідкості */
-        .Рідкісний { color: #2ecc71; text-shadow: 0 0 10px #2ecc71; }
-        .Сверхрідкісний { color: #3498db; text-shadow: 0 0 10px #3498db; }
-        .Епічний { color: #9b59b6; text-shadow: 0 0 10px #9b59b6; }
-        .Міфічний { color: #e74c3c; text-shadow: 0 0 10px #e74c3c; }
-        .Легендарний { color: #f1c40f; text-shadow: 0 0 20px #f1c40f; }
+        .Рідкісний { color: #2ecc71; text-shadow: 0 0 15px #2ecc71; }
+        .Сверхрідкісний { color: #3498db; text-shadow: 0 0 15px #3498db; }
+        .Епічний { color: #9b59b6; text-shadow: 0 0 15px #9b59b6; }
+        .Міфічний { color: #e74c3c; text-shadow: 0 0 15px #e74c3c; }
+        .Легендарний { color: #f1c40f; text-shadow: 0 0 25px #f1c40f; font-size: 40px; animation: pulse 1s infinite; }
 
-        /* Проста CSS анімація "відкриття" */
+        .item-name { font-size: 36px; margin: 20px 0; display: block; color: #fff; }
+        .hero-name { color: #f39c12; }
+
+        /* Анімації */
         @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
+            0% { transform: translate(2px, 2px) rotate(0deg); }
+            10% { transform: translate(-2px, -4px) rotate(-2deg); }
+            20% { transform: translate(-6px, 0px) rotate(2deg); }
+            30% { transform: translate(6px, 4px) rotate(0deg); }
+            40% { transform: translate(2px, -2px) rotate(2deg); }
+            50% { transform: translate(-2px, 4px) rotate(-2deg); }
+            60% { transform: translate(-6px, 2px) rotate(0deg); }
+            70% { transform: translate(6px, 2px) rotate(-2deg); }
+            80% { transform: translate(-2px, -2px) rotate(2deg); }
+            90% { transform: translate(2px, 4px) rotate(0deg); }
+            100% { transform: translate(2px, -4px) rotate(-2deg); }
         }
-        .animating { animation: shake 0.5s; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .animating { animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both; }
     </style>
 </head>
 <body>
 
-    <h1>Біблійні Герої: Прокачка</h1>
+    <h1>Біблійні Герої</h1>
     
     <div class="stats">
-        Ваші кристали: <span class="crystal" id="crystal-count">500</span> 💎
+        Кристали: <span class="crystal" id="crystal-count">500</span> 💎
     </div>
 
     <div class="box-container">
-        <div class="box" onclick="openBox('standard', 30)">
+        <div class="box" onclick="openBox('standard', 30)" id="box-standard">
+            <div class="box-icon">📦</div>
             <h3>Звичайний Бокс</h3>
-            <p>Ціна: 30 💎</p>
+            <p>30 💎</p>
         </div>
-        <div class="box" onclick="openBox('mega', 100)">
-            <h3>Мега Бокс</h3>
-            <p>Ціна: 100 💎</p>
+        <div class="box" onclick="openBox('mega', 100)" style="border-color: #9b59b6;" id="box-mega">
+            <div class="box-icon">🎁</div>
+            <h3 style="color: #9b59b6;">Мега Бокс</h3>
+            <p>100 💎</p>
         </div>
     </div>
 
@@ -61,15 +120,21 @@
 
     <script>
         let crystals = 500;
-        const heroes = ["Неемія", "Давид", "Самсон", "Йосип"];
 
-        // Шанси: [Рідкісний, Сверхрідкісний, Епічний, Міфічний, Легендарний]
+        const heroesData = {
+            "Неемія": ["Одяг виночерпія", "Робоча туніка з кельмою", "Шкіряна броня з мечем", "Обладунки намісника", "Стіни Єрусалима 🏰"],
+            "Давид": ["Пастуша накидка", "Праща з каменями", "Броня царя Саула", "Царські шати з арфою", "Переможець Голіафа ⚔️"],
+            "Самсон": ["Розірвані мотузки", "Осляча щелепа", "Розпущене волосся (7 кіс)", "Броня з уламків колон", "Гнів Лева 🦁"],
+            "Йосип": ["Туніка пастуха", "Різнокольорова одежа", "Одяг в'язня з ключами", "Шати єгипетського візира", "Володар Зерна 🌾"]
+        };
+        
+        const heroes = Object.keys(heroesData);
+        const rarities = ["Рідкісний", "Сверхрідкісний", "Епічний", "Міфічний", "Легендарний"];
+
         const chances = {
-            standard: [70, 90, 98, 99.9, 100], // Кумулятивні шанси для легкого рандому
+            standard: [70, 90, 98, 99.9, 100],
             mega: [30, 70, 90, 98, 100]
         };
-
-        const rarities = ["Рідкісний", "Сверхрідкісний", "Епічний", "Міфічний", "Легендарний"];
 
         function updateUI() {
             document.getElementById('crystal-count').innerText = crystals;
@@ -77,29 +142,28 @@
 
         function openBox(type, cost) {
             if (crystals < cost) {
-                alert("Недостатньо кристалів!");
+                alert("Недостатньо кристалів! Заробіть більше в іграх!");
                 return;
             }
 
-            // Віднімаємо кристали
             crystals -= cost;
             updateUI();
 
             const resultScreen = document.getElementById('result-screen');
             resultScreen.style.display = 'none';
-            resultScreen.className = '';
             
-            // Імітація анімації відкриття
-            document.body.classList.add('animating');
+            const boxElement = type === 'standard' ? document.getElementById('box-standard') : document.getElementById('box-mega');
+            boxElement.classList.add('animating');
+            
             setTimeout(() => {
-                document.body.classList.remove('animating');
+                boxElement.classList.remove('animating');
                 generateLoot(type);
-            }, 600); // Затримка для анімації
+            }, 600);
         }
 
         function generateLoot(boxType) {
             const randHero = heroes[Math.floor(Math.random() * heroes.length)];
-            const roll = Math.random() * 100; // Випадкове число від 0 до 100
+            const roll = Math.random() * 100;
             
             let rarityIndex = 0;
             for (let i = 0; i < chances[boxType].length; i++) {
@@ -110,18 +174,23 @@
             }
 
             const droppedRarity = rarities[rarityIndex];
+            const itemName = heroesData[randHero][rarityIndex];
+            
             const resultScreen = document.getElementById('result-screen');
             
-            resultScreen.innerHTML = `Випав предмет для героя <b>${randHero}</b>!<br>
-                                      Рідкість: <span class="${droppedRarity}">${droppedRarity}</span>`;
-            resultScreen.style.display = 'block';
-            
-            // Якщо лега - додаємо додатковий ефект
+            let htmlContent = `Герой: <span class="hero-name"><b>${randHero}</b></span><br>`;
+            htmlContent += `<span class="item-name">${itemName}</span>`;
+            htmlContent += `Рідкість: <span class="${droppedRarity}">${droppedRarity}</span>`;
+
             if(droppedRarity === "Легендарний") {
-                resultScreen.innerHTML += "<br>🌟 ВАУ! ЛЕГЕНДАРКА! 🌟";
+                htmlContent += "<br><br>🌟 ВАУ! ЛЕГЕНДАРКА! 🌟";
+            } else if (droppedRarity === "Міфічний") {
+                htmlContent += "<br><br>🔥 КРУТО! МІФІК! 🔥";
             }
+
+            resultScreen.innerHTML = htmlContent;
+            resultScreen.style.display = 'block';
         }
     </script>
-
 </body>
 </html>
